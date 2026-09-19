@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SkillCert AI
 
-## Getting Started
+Plateforme independante de preparation aux certifications IA : cours, fiches de revision, QCM par domaine et examens blancs chronometres pour les certifications Anthropic Claude, OpenAI, AWS, Google Cloud et Microsoft Azure.
 
-First, run the development server:
+> Ressource independante, non affiliee ni approuvee par Anthropic, OpenAI, Amazon Web Services, Google ou Microsoft. Les formats d'examen (nombre de questions, duree, prix, seuil de reussite) sont indiques a titre indicatif : verifiez toujours les informations a jour sur le site officiel du fournisseur avant de vous inscrire.
+
+## Certifications couvertes (v1)
+
+- **Anthropic** — Claude Certified Associate
+- **OpenAI** — AI Foundations (OpenAI Academy, badge de completion)
+- **AWS** — AWS Certified AI Practitioner (AIF-C01)
+- **Google Cloud** — Generative AI Leader
+- **Microsoft Azure** — Azure AI Fundamentals (AI-900)
+
+Chaque certification suit la meme structure : domaines d'examen ponderes, modules de cours, glossaire en fiches a retourner, banque de QCM avec correction immediate, et un examen blanc qui recompose une simulation chronometree respectant la ponderation officielle.
+
+## Stack technique
+
+- [Next.js](https://nextjs.org/) 16 (App Router, Turbopack)
+- TypeScript
+- Tailwind CSS v4
+- [shadcn/ui](https://ui.shadcn.com/) sur base [Base UI](https://base-ui.com/)
+- Contenu et progression : fichiers TypeScript statiques + `localStorage` (aucune base de donnees, aucun compte requis)
+
+## Demarrage local
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+L'application est servie sur [http://localhost:3520](http://localhost:3520).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Scripts disponibles
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `npm run dev` — serveur de developpement (port 3520)
+- `npm run build` — build de production
+- `npm run start` — sert le build de production
+- `npm run lint` — verifie le code avec ESLint
 
-## Learn More
+## Structure du contenu
 
-To learn more about Next.js, take a look at the following resources:
+Le contenu pedagogique vit dans `src/content/certifications/*.ts`, un fichier par certification, conforme a l'interface `Certification` definie dans `src/content/types.ts` (domaines, modules de cours, glossaire, banque de QCM, plan de revision). Ajouter une certification consiste a creer un nouveau fichier suivant ce modele et a l'enregistrer dans `src/content/index.ts`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+La progression de l'utilisateur (modules lus, scores de QCM, tentatives d'examen blanc) est stockee uniquement dans le `localStorage` du navigateur : aucune donnee n'est envoyee a un serveur.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Deploiement
 
-## Deploy on Vercel
+Projet concu pour un deploiement sur [Vercel](https://vercel.com/).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Licence
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+© 2026 Riadh MNASRI. Tous droits reserves.
