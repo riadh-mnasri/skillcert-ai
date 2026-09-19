@@ -52,12 +52,11 @@
 }
 
 /*
-  Identite visuelle "cahier d'examen" : fond bleu ciel vif + cartes blanches +
-  sceau bleu ciel/bordeaux. Choix deliberement eloigne du gradient
-  indigo/violet generique "AI SaaS".
+  Identite visuelle "cahier d'examen" : fond blanc + sceau bleu ciel/bordeaux.
+  Choix deliberement eloigne du gradient indigo/violet generique "AI SaaS".
 */
 :root {
-  --background: oklch(0.918 0.036 239.2);
+  --background: oklch(0.995 0.002 240);
   --foreground: oklch(0.22 0.02 250);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.22 0.02 250);
@@ -65,15 +64,15 @@
   --popover-foreground: oklch(0.22 0.02 250);
   --primary: oklch(0.592 0.124 249.3);
   --primary-foreground: oklch(0.99 0.004 250);
-  --secondary: oklch(0.951 0.019 240.7);
+  --secondary: oklch(0.96 0.008 240);
   --secondary-foreground: oklch(0.28 0.03 250);
-  --muted: oklch(0.9 0.028 240);
+  --muted: oklch(0.95 0.01 240);
   --muted-foreground: oklch(0.48 0.03 245);
-  --accent: oklch(0.87 0.045 241);
+  --accent: oklch(0.93 0.02 241);
   --accent-foreground: oklch(0.26 0.03 250);
   --destructive: oklch(0.54 0.19 27);
-  --border: oklch(0.78 0.045 240);
-  --input: oklch(0.78 0.045 240);
+  --border: oklch(0.88 0.015 240);
+  --input: oklch(0.88 0.015 240);
   --ring: oklch(0.592 0.124 249.3 / 45%);
   --gold: oklch(0.465 0.111 11);
   --gold-foreground: oklch(0.97 0.015 20);
@@ -87,9 +86,9 @@
   --sidebar-foreground: oklch(0.22 0.02 250);
   --sidebar-primary: oklch(0.592 0.124 249.3);
   --sidebar-primary-foreground: oklch(0.99 0.004 250);
-  --sidebar-accent: oklch(0.87 0.045 241);
+  --sidebar-accent: oklch(0.93 0.02 241);
   --sidebar-accent-foreground: oklch(0.26 0.03 250);
-  --sidebar-border: oklch(0.78 0.045 240);
+  --sidebar-border: oklch(0.88 0.015 240);
   --sidebar-ring: oklch(0.592 0.124 249.3 / 45%);
 }
 
