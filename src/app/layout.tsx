@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Fraunces, Figtree, JetBrains_Mono } from "next/font/google";
+import { Fraunces, Figtree, Source_Serif_4, JetBrains_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/site/theme-provider";
 import { LanguageProvider } from "@/components/site/language-provider";
 import { SiteHeader } from "@/components/site/site-header";
@@ -19,6 +19,13 @@ const fontBody = Figtree({
   variable: "--font-body",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
+});
+
+const fontReading = Source_Serif_4({
+  variable: "--font-reading",
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  style: ["normal", "italic"],
 });
 
 const fontMonoExam = JetBrains_Mono({
@@ -44,7 +51,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "oklch(0.975 0.013 84)" },
+    { media: "(prefers-color-scheme: light)", color: "oklch(0.918 0.036 239.2)" },
     { media: "(prefers-color-scheme: dark)", color: "oklch(0.222 0.041 259.3)" },
   ],
 };
@@ -54,7 +61,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="fr"
       suppressHydrationWarning
-      className={`${fontDisplay.variable} ${fontBody.variable} ${fontMonoExam.variable} h-full antialiased`}
+      className={`${fontDisplay.variable} ${fontBody.variable} ${fontReading.variable} ${fontMonoExam.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <ThemeProvider

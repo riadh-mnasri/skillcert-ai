@@ -94,7 +94,7 @@ export function FlashcardDeck({ cert, domainId }: { cert: Certification; domainI
             <span className="text-[10px] font-medium uppercase tracking-wide opacity-80">
               Definition
             </span>
-            <p className="text-center text-sm leading-relaxed sm:text-base">{term.definition}</p>
+            <p className="text-center font-reading text-base leading-relaxed sm:text-lg">{term.definition}</p>
           </div>
         </div>
       </button>

@@ -9,7 +9,7 @@ export function ModuleBody({ body }: { body: string }) {
     .filter(Boolean);
 
   return (
-    <div className="space-y-4">
+    <div className="max-w-[68ch] space-y-5 font-reading text-[1.0625rem] leading-[1.75] text-foreground/85">
       {blocks.map((block, blockIndex) => {
         const lines = block
           .split("\n")
@@ -19,21 +19,15 @@ export function ModuleBody({ body }: { body: string }) {
 
         if (isList) {
           return (
-            <ul key={blockIndex} className="ml-1 list-disc space-y-1.5 pl-5 marker:text-primary">
+            <ul key={blockIndex} className="ml-1 list-disc space-y-2 pl-5 marker:text-primary">
               {lines.map((line, i) => (
-                <li key={i} className="text-muted-foreground">
-                  {line.replace(/^[-•]\s+/, "")}
-                </li>
+                <li key={i}>{line.replace(/^[-•]\s+/, "")}</li>
               ))}
             </ul>
           );
         }
 
-        return (
-          <p key={blockIndex} className="leading-relaxed text-muted-foreground">
-            {lines.join(" ")}
-          </p>
-        );
+        return <p key={blockIndex}>{lines.join(" ")}</p>;
       })}
     </div>
   );
