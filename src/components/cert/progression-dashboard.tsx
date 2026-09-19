@@ -5,10 +5,12 @@ import { BookOpen, GraduationCap, Timer } from "lucide-react";
 import { certifications } from "@/content";
 import { ProviderBadge } from "@/components/cert/provider-badge";
 import { useAllProgress } from "@/lib/use-progress";
+import { useLanguage } from "@/components/site/language-provider";
 import { cn } from "@/lib/utils";
 
 export function ProgressionDashboard() {
   const allProgress = useAllProgress();
+  const { t } = useLanguage();
 
   const started = certifications.filter((cert) => {
     const p = allProgress[cert.slug];
@@ -18,15 +20,12 @@ export function ProgressionDashboard() {
   if (started.length === 0) {
     return (
       <div className="rounded-xl border border-dashed border-border p-8 text-center">
-        <p className="text-sm text-muted-foreground">
-          Aucune progression enregistree pour le moment. Ouvrez un module de cours ou un QCM
-          pour commencer a suivre votre avancement.
-        </p>
+        <p className="text-sm text-muted-foreground">{t("progression", "empty")}</p>
         <Link
           href="/certifications"
           className="mt-4 inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground"
         >
-          Parcourir les certifications
+          {t("progression", "browse")}
         </Link>
       </div>
     );
@@ -59,7 +58,7 @@ export function ProgressionDashboard() {
                 href={`/certifications/${cert.slug}/cours`}
                 className="text-sm font-medium text-primary hover:underline"
               >
-                Continuer
+                {t("progression", "continue")}
               </Link>
             </div>
 
@@ -67,7 +66,7 @@ export function ProgressionDashboard() {
               <div className="rounded-lg bg-secondary/50 p-3">
                 <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
                   <BookOpen className="size-3.5" />
-                  Cours
+                  {t("progression", "courses")}
                 </div>
                 <p className="mt-1 font-heading text-lg font-semibold">
                   {p.modulesRead.length}/{cert.modules.length}
@@ -80,18 +79,20 @@ export function ProgressionDashboard() {
               <div className="rounded-lg bg-secondary/50 p-3">
                 <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
                   <GraduationCap className="size-3.5" />
-                  QCM
+                  {t("progression", "quiz")}
                 </div>
                 <p className="mt-1 font-heading text-lg font-semibold">
                   {masteryPercent !== null ? `${masteryPercent}%` : "—"}
                 </p>
-                <p className="mt-1.5 text-xs text-muted-foreground">{totalAttempts} reponses donnees</p>
+                <p className="mt-1.5 text-xs text-muted-foreground">
+                  {totalAttempts} {t("progression", "answersGiven")}
+                </p>
               </div>
 
               <div className="rounded-lg bg-secondary/50 p-3">
                 <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
                   <Timer className="size-3.5" />
-                  Examen blanc
+                  {t("progression", "mockExam")}
                 </div>
                 <p
                   className={cn(
@@ -99,10 +100,11 @@ export function ProgressionDashboard() {
                     lastExam && lastExam.passed ? "text-primary" : "",
                   )}
                 >
-                  {lastExam ? `${lastExam.scorePercent}%` : "Pas encore tente"}
+                  {lastExam ? `${lastExam.scorePercent}%` : t("progression", "notAttempted")}
                 </p>
                 <p className="mt-1.5 text-xs text-muted-foreground">
-                  {p.examAttempts.length} tentative{p.examAttempts.length > 1 ? "s" : ""}
+                  {p.examAttempts.length}{" "}
+                  {p.examAttempts.length > 1 ? t("progression", "attempts") : t("progression", "attempt")}
                 </p>
               </div>
             </div>

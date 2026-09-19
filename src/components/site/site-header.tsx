@@ -6,6 +6,8 @@ import { usePathname } from "next/navigation";
 import { Menu } from "lucide-react";
 import { Seal } from "@/components/site/seal";
 import { ThemeToggle } from "@/components/site/theme-toggle";
+import { LanguageToggle } from "@/components/site/language-toggle";
+import { useLanguage } from "@/components/site/language-provider";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -17,15 +19,16 @@ import {
 } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 
-const navItems = [
-  { href: "/certifications", label: "Certifications" },
-  { href: "/progression", label: "Ma progression" },
-  { href: "/methode", label: "Methode" },
-];
-
 export function SiteHeader() {
   const pathname = usePathname();
   const [open, setOpen] = React.useState(false);
+  const { t } = useLanguage();
+
+  const navItems = [
+    { href: "/certifications", label: t("nav", "certifications") },
+    { href: "/progression", label: t("nav", "progression") },
+    { href: "/methode", label: t("nav", "methode") },
+  ];
 
   return (
     <header className="sticky top-0 z-40 border-b border-border/80 bg-background/90 backdrop-blur supports-[backdrop-filter]:bg-background/75">
@@ -56,9 +59,15 @@ export function SiteHeader() {
         </nav>
 
         <div className="flex items-center gap-1.5">
+          <LanguageToggle />
           <ThemeToggle />
-          <Button nativeButton={false} render={<Link href="/certifications" />} size="sm" className="hidden sm:inline-flex">
-            Choisir ma certification
+          <Button
+            nativeButton={false}
+            render={<Link href="/certifications" />}
+            size="sm"
+            className="hidden sm:inline-flex"
+          >
+            {t("nav", "cta")}
           </Button>
 
           <Sheet open={open} onOpenChange={setOpen}>
@@ -93,7 +102,7 @@ export function SiteHeader() {
                     />
                   }
                 >
-                  Choisir ma certification
+                  {t("nav", "cta")}
                 </SheetClose>
               </nav>
             </SheetContent>

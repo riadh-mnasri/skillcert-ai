@@ -4,35 +4,39 @@ import Link from "next/link";
 import { BookOpen, GraduationCap, ListChecks, Timer, ChevronRight } from "lucide-react";
 import type { Certification } from "@/content/types";
 import { useCertProgress } from "@/lib/use-progress";
+import { useLanguage } from "@/components/site/language-provider";
 
 export function SectionNavCards({ cert }: { cert: Certification }) {
   const progress = useCertProgress(cert.slug);
+  const { t } = useLanguage();
   const lastAttempt = progress.examAttempts[0];
 
   const cards = [
     {
       href: `/certifications/${cert.slug}/cours`,
       icon: BookOpen,
-      title: "Cours",
-      detail: `${progress.modulesRead.length}/${cert.modules.length} modules lus`,
+      title: t("sectionNav", "courses"),
+      detail: `${progress.modulesRead.length}/${cert.modules.length} ${t("sectionNav", "modulesRead")}`,
     },
     {
       href: `/certifications/${cert.slug}/fiches`,
       icon: ListChecks,
-      title: "Fiches de revision",
-      detail: `${cert.glossary.length} termes a memoriser`,
+      title: t("sectionNav", "flashcards"),
+      detail: `${cert.glossary.length} ${t("sectionNav", "termsToLearn")}`,
     },
     {
       href: `/certifications/${cert.slug}/qcm`,
       icon: GraduationCap,
-      title: "QCM par domaine",
-      detail: `${cert.quizBank.length} questions dans la banque`,
+      title: t("sectionNav", "quiz"),
+      detail: `${cert.quizBank.length} ${t("sectionNav", "questionsInBank")}`,
     },
     {
       href: `/certifications/${cert.slug}/examen-blanc`,
       icon: Timer,
-      title: "Examen blanc",
-      detail: lastAttempt ? `Dernier score : ${lastAttempt.scorePercent}%` : "Simulation chronometree",
+      title: t("sectionNav", "mockExam"),
+      detail: lastAttempt
+        ? `${t("sectionNav", "lastScore")} : ${lastAttempt.scorePercent}%`
+        : t("sectionNav", "timedSimulation"),
     },
   ];
 
