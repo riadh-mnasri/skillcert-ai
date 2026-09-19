@@ -225,7 +225,7 @@ export function ExamRunner({ cert }: { cert: Certification }) {
             className={cn(
               "inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-medium",
               flagged.has(current.id)
-                ? "border-gold bg-gold/20 text-gold-foreground"
+                ? "border-gold bg-gold/20 text-foreground"
                 : "border-border text-muted-foreground hover:border-gold",
             )}
           >
