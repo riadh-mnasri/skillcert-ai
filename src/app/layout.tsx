@@ -35,7 +35,7 @@ const fontMonoExam = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://skillcert-ai.vercel.app"),
+  metadataBase: new URL("https://skillcert-ai-eight.vercel.app"),
   title: {
     default: "SkillCert AI — Préparation aux certifications IA",
     template: "%s · SkillCert AI",

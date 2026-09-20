@@ -23,6 +23,9 @@ export const dictionary = {
       fr: "Non affilie a Anthropic, OpenAI, Amazon Web Services, Google ou Microsoft. Les noms et marques citees appartiennent a leurs proprietaires respectifs.",
       en: "Not affiliated with Anthropic, OpenAI, Amazon Web Services, Google, or Microsoft. All names and trademarks mentioned belong to their respective owners.",
     },
+    author: { fr: "Auteur", en: "Author" },
+    createdBy: { fr: "Cree par Riadh MNASRI", en: "Built by Riadh MNASRI" },
+    aboutLink: { fr: "A propos de ce projet", en: "About this project" },
   },
   home: {
     badge: { fr: "5 fournisseurs IA, une seule methode de revision", en: "5 AI providers, one revision method" },
@@ -154,6 +157,22 @@ export const dictionary = {
     notAttempted: { fr: "Pas encore tente", en: "Not attempted yet" },
     attempt: { fr: "tentative", en: "attempt" },
     attempts: { fr: "tentatives", en: "attempts" },
+  },
+  about: {
+    title: { fr: "A propos de SkillCert AI", en: "About SkillCert AI" },
+    p1: {
+      fr: "SkillCert AI est concu et developpe par Riadh MNASRI, tech lead freelance specialise en architecture logicielle et en risque financier (marches de capitaux, risque de contrepartie). C'est l'un de ses projets personnels : une plateforme complete de preparation aux certifications IA, pensee pour etre utilisable entierement depuis un telephone.",
+      en: "SkillCert AI is designed and built by Riadh MNASRI, a freelance tech lead specialized in software architecture and financial risk (capital markets, counterparty risk). It is one of his personal projects: a complete AI certification prep platform, designed to be fully usable from a phone.",
+    },
+    p2: {
+      fr: "Le contenu (domaines d'examen, cours, glossaire, QCM) est redige a partir des guides d'examen publics de chaque fournisseur, puis verifie et mis en forme pour la revision. Le code est ecrit en Next.js/TypeScript, sans base de donnees : la progression reste dans le navigateur de chaque utilisateur.",
+      en: "The content (exam domains, courses, glossary, quizzes) is written from each provider's public exam guides, then reviewed and formatted for revision. The code is built with Next.js/TypeScript, with no database: progress stays in each user's own browser.",
+    },
+    linksHeading: { fr: "Retrouvez Riadh MNASRI", en: "Find Riadh MNASRI" },
+    linkedin: { fr: "Profil LinkedIn", en: "LinkedIn profile" },
+    portfolio: { fr: "Portfolio", en: "Portfolio" },
+    blog: { fr: "Blog technique", en: "Technical blog" },
+    cta: { fr: "Choisir une certification", en: "Choose a certification" },
   },
 } as const;
 
