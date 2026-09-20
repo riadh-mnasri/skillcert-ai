@@ -51,7 +51,7 @@ export default function TwitterImage() {
 
         <div style={{ display: "flex", flexDirection: "column", gap: 20, maxWidth: 980 }}>
           <div style={{ display: "flex", fontSize: 58, fontWeight: 700, color: "#1c2b3a", lineHeight: 1.15 }}>
-            Reussissez vos certifications IA, sans deviner ce qui va tomber.
+            Réussissez vos certifications IA, sans deviner ce qui va tomber.
           </div>
           <div style={{ display: "flex", fontSize: 28, color: "#51677d" }}>
             Anthropic Claude · OpenAI · AWS · Google Cloud · Microsoft Azure

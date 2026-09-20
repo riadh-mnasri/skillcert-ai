@@ -4,10 +4,12 @@ import Link from "next/link";
 import { Check, Clock3 } from "lucide-react";
 import type { Certification } from "@/content/types";
 import { useCertProgress } from "@/lib/use-progress";
+import { useLanguage } from "@/components/site/language-provider";
 import { cn } from "@/lib/utils";
 
 export function ModuleList({ cert }: { cert: Certification }) {
   const progress = useCertProgress(cert.slug);
+  const { t } = useLanguage();
 
   return (
     <ol className="space-y-3">
@@ -41,7 +43,7 @@ export function ModuleList({ cert }: { cert: Certification }) {
               </div>
               <span className="hidden shrink-0 items-center gap-1 text-xs text-muted-foreground sm:flex">
                 <Clock3 className="size-3.5" />
-                {courseModule.readMinutes} min
+                {courseModule.readMinutes} {t("cert", "min")}
               </span>
             </Link>
           </li>

@@ -15,9 +15,9 @@ export default async function CertificationsPage(props: PageProps<"/certificatio
   const rawFilter = typeof searchParams.fournisseur === "string" ? searchParams.fournisseur : undefined;
   const activeFilter = providerList.some((p) => p.id === rawFilter) ? (rawFilter as ProviderId) : undefined;
 
-  const filtered = activeFilter
-    ? certifications.filter((c) => c.providerId === activeFilter)
-    : certifications;
+  const slugs = (activeFilter ? certifications.filter((c) => c.providerId === activeFilter) : certifications).map(
+    (c) => c.slug,
+  );
 
-  return <CertificationsBrowser certifications={filtered} activeFilter={activeFilter} />;
+  return <CertificationsBrowser slugs={slugs} activeFilter={activeFilter} />;
 }

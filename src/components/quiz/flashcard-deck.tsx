@@ -4,6 +4,7 @@ import * as React from "react";
 import { ChevronLeft, ChevronRight, Shuffle } from "lucide-react";
 import type { Certification } from "@/content/types";
 import { markFlashcardSeen } from "@/lib/progress";
+import { useLanguage } from "@/components/site/language-provider";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -22,7 +23,8 @@ function shuffle<T>(items: T[]): T[] {
  * son etat via un effet.
  */
 export function FlashcardDeck({ cert, domainId }: { cert: Certification; domainId?: string }) {
-  const baseTerms = domainId ? cert.glossary.filter((t) => t.domainId === domainId) : cert.glossary;
+  const { t } = useLanguage();
+  const baseTerms = domainId ? cert.glossary.filter((term) => term.domainId === domainId) : cert.glossary;
 
   const [order, setOrder] = React.useState(() => baseTerms.map((_, i) => i));
   const [index, setIndex] = React.useState(0);
@@ -31,7 +33,7 @@ export function FlashcardDeck({ cert, domainId }: { cert: Certification; domainI
   if (baseTerms.length === 0) {
     return (
       <p className="rounded-lg border border-dashed border-border p-6 text-sm text-muted-foreground">
-        Aucune fiche disponible pour ce domaine pour le moment.
+        {t("flashcardUi", "noCards")}
       </p>
     );
   }
@@ -54,7 +56,7 @@ export function FlashcardDeck({ cert, domainId }: { cert: Certification; domainI
     <div className="mx-auto max-w-lg">
       <div className="mb-3 flex items-center justify-between text-xs text-muted-foreground">
         <span>
-          Fiche {index + 1} / {order.length}
+          {t("flashcardUi", "card")} {index + 1} / {order.length}
         </span>
         <Button
           variant="ghost"
@@ -67,14 +69,14 @@ export function FlashcardDeck({ cert, domainId }: { cert: Certification; domainI
           }}
         >
           <Shuffle className="size-3.5" />
-          Melanger
+          {t("flashcardUi", "shuffle")}
         </Button>
       </div>
 
       <button
         type="button"
         onClick={handleFlip}
-        aria-label="Retourner la fiche"
+        aria-label={t("flashcardUi", "flipAria")}
         className="group relative block h-56 w-full [perspective:1200px] sm:h-64"
       >
         <div
@@ -85,14 +87,14 @@ export function FlashcardDeck({ cert, domainId }: { cert: Certification; domainI
         >
           <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 rounded-xl bg-card p-6 [backface-visibility:hidden]">
             <span className="text-[10px] font-medium uppercase tracking-wide text-muted-foreground">
-              Terme
+              {t("flashcardUi", "term")}
             </span>
             <p className="font-heading text-xl font-semibold sm:text-2xl">{term.term}</p>
-            <span className="mt-2 text-xs text-muted-foreground">Touchez pour voir la definition</span>
+            <span className="mt-2 text-xs text-muted-foreground">{t("flashcardUi", "tapToReveal")}</span>
           </div>
           <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 rounded-xl bg-primary p-6 text-primary-foreground [backface-visibility:hidden] [transform:rotateY(180deg)]">
             <span className="text-[10px] font-medium uppercase tracking-wide opacity-80">
-              Definition
+              {t("flashcardUi", "definition")}
             </span>
             <p className="text-center font-reading text-base leading-relaxed sm:text-lg">{term.definition}</p>
           </div>
@@ -100,13 +102,23 @@ export function FlashcardDeck({ cert, domainId }: { cert: Certification; domainI
       </button>
 
       <div className="mt-4 flex items-center justify-between gap-3">
-        <Button variant="outline" size="icon" onClick={() => goTo(index - 1)} aria-label="Fiche precedente">
+        <Button
+          variant="outline"
+          size="icon"
+          onClick={() => goTo(index - 1)}
+          aria-label={t("flashcardUi", "prevAria")}
+        >
           <ChevronLeft className="size-4" />
         </Button>
         <Button onClick={handleFlip} variant="secondary" className="flex-1">
-          Retourner
+          {t("flashcardUi", "flipButton")}
         </Button>
-        <Button variant="outline" size="icon" onClick={() => goTo(index + 1)} aria-label="Fiche suivante">
+        <Button
+          variant="outline"
+          size="icon"
+          onClick={() => goTo(index + 1)}
+          aria-label={t("flashcardUi", "nextAria")}
+        >
           <ChevronRight className="size-4" />
         </Button>
       </div>

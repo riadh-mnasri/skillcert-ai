@@ -6,6 +6,7 @@ import { Flag, RotateCcw, Timer } from "lucide-react";
 import type { Certification } from "@/content/types";
 import { buildMockExam, scoreExam } from "@/lib/exam";
 import { recordExamAttempt } from "@/lib/progress";
+import { useLanguage } from "@/components/site/language-provider";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -34,6 +35,7 @@ function createSession(cert: Certification) {
 }
 
 export function ExamRunner({ cert }: { cert: Certification }) {
+  const { t } = useLanguage();
   const [session, setSession] = React.useState(() => createSession(cert));
   const { questions } = session;
 
@@ -106,7 +108,7 @@ export function ExamRunner({ cert }: { cert: Certification }) {
             {result.scorePercent}%
           </p>
           <p className="mt-2 text-sm text-muted-foreground">
-            {result.correctCount} bonnes reponses sur {result.totalCount}
+            {result.correctCount} {t("quizUi", "correctOutOf")} {result.totalCount}
           </p>
           <p
             className={cn(
@@ -114,25 +116,24 @@ export function ExamRunner({ cert }: { cert: Certification }) {
               passed ? "bg-primary/10 text-primary" : "bg-destructive/10 text-destructive",
             )}
           >
-            {passed ? "Niveau atteint (seuil indicatif 70%)" : "Sous le seuil indicatif de 70%"}
+            {passed ? t("examUi", "levelReached") : t("examUi", "belowThreshold")}
           </p>
           <p className="mt-4 text-xs text-muted-foreground">
-            Score indicatif base sur cet examen blanc. Le format et le seuil de reussite reels sont :{" "}
-            {cert.format.passingScore}.
+            {t("examUi", "scoreNote")} {cert.format.passingScore}.
           </p>
           <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
             <Button onClick={restart}>
               <RotateCcw className="size-4" />
-              Refaire un examen blanc
+              {t("examUi", "retakeExam")}
             </Button>
             <Button variant="outline" nativeButton={false} render={<Link href={`/certifications/${cert.slug}`} />}>
-              Retour a la certification
+              {t("examUi", "backToCert")}
             </Button>
           </div>
         </div>
 
         <div className="space-y-3">
-          <h2 className="font-heading text-lg font-semibold">Resultat par domaine</h2>
+          <h2 className="font-heading text-lg font-semibold">{t("examUi", "resultByDomain")}</h2>
           {result.domainBreakdown.map((d) => {
             const pct = d.total > 0 ? Math.round((d.correct / d.total) * 100) : 0;
             return (
@@ -166,7 +167,7 @@ export function ExamRunner({ cert }: { cert: Certification }) {
       <div className="sticky top-16 z-10 -mx-4 border-b border-border bg-background/95 px-4 py-3 backdrop-blur sm:mx-0 sm:rounded-lg sm:border sm:px-4">
         <div className="flex items-center justify-between gap-3">
           <span className="text-xs text-muted-foreground">
-            {answeredCount}/{questions.length} repondues
+            {answeredCount}/{questions.length} {t("examUi", "answered")}
           </span>
           <span
             className={cn(
@@ -230,7 +231,7 @@ export function ExamRunner({ cert }: { cert: Certification }) {
             )}
           >
             <Flag className="size-3.5" />
-            {flagged.has(current.id) ? "Marquee" : "Marquer"}
+            {flagged.has(current.id) ? t("examUi", "marked") : t("examUi", "mark")}
           </button>
         </div>
 
@@ -267,12 +268,14 @@ export function ExamRunner({ cert }: { cert: Certification }) {
 
         <div className="mt-5 flex items-center justify-between gap-3">
           <Button variant="outline" onClick={() => setIndex((i) => Math.max(0, i - 1))} disabled={index === 0}>
-            Precedent
+            {t("examUi", "previous")}
           </Button>
           {index + 1 === questions.length ? (
-            <Button onClick={() => setConfirmOpen(true)}>Terminer l&apos;examen</Button>
+            <Button onClick={() => setConfirmOpen(true)}>{t("examUi", "finishExam")}</Button>
           ) : (
-            <Button onClick={() => setIndex((i) => Math.min(questions.length - 1, i + 1))}>Suivant</Button>
+            <Button onClick={() => setIndex((i) => Math.min(questions.length - 1, i + 1))}>
+              {t("examUi", "next")}
+            </Button>
           )}
         </div>
       </div>
@@ -280,18 +283,18 @@ export function ExamRunner({ cert }: { cert: Certification }) {
       <Dialog open={confirmOpen} onOpenChange={setConfirmOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Terminer l&apos;examen blanc ?</DialogTitle>
+            <DialogTitle>{t("examUi", "finishExamDialogTitle")}</DialogTitle>
             <DialogDescription>
               {answeredCount === questions.length
-                ? "Toutes les questions ont une reponse."
-                : `${questions.length - answeredCount} question(s) sans reponse. Elles seront comptees comme incorrectes.`}
+                ? t("examUi", "allAnswered")
+                : `${questions.length - answeredCount} ${t("examUi", "unansweredWarning")}`}
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
             <Button variant="outline" onClick={() => setConfirmOpen(false)}>
-              Continuer l&apos;examen
+              {t("examUi", "continueExam")}
             </Button>
-            <Button onClick={submit}>Valider et voir le score</Button>
+            <Button onClick={submit}>{t("examUi", "submitExam")}</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

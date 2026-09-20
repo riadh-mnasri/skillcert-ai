@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { ArrowRight, BookOpen, GraduationCap, ListChecks, Timer } from "lucide-react";
-import { certifications } from "@/content";
+import { getAllCertifications } from "@/content";
 import { providerList } from "@/content/providers";
 import { CertCard } from "@/components/cert/cert-card";
 import { Seal } from "@/components/site/seal";
@@ -11,6 +11,7 @@ import { useLanguage } from "@/components/site/language-provider";
 
 export default function HomePage() {
   const { t, lang } = useLanguage();
+  const certifications = getAllCertifications(lang);
   const moduleCount = certifications.reduce((sum, c) => sum + c.modules.length, 0);
   const questionCount = certifications.reduce((sum, c) => sum + c.quizBank.length, 0);
   const glossaryCount = certifications.reduce((sum, c) => sum + c.glossary.length, 0);

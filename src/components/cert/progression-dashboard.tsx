@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { BookOpen, GraduationCap, Timer } from "lucide-react";
-import { certifications } from "@/content";
+import { getAllCertifications } from "@/content";
 import { ProviderBadge } from "@/components/cert/provider-badge";
 import { useAllProgress } from "@/lib/use-progress";
 import { useLanguage } from "@/components/site/language-provider";
@@ -10,7 +10,8 @@ import { cn } from "@/lib/utils";
 
 export function ProgressionDashboard() {
   const allProgress = useAllProgress();
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
+  const certifications = getAllCertifications(lang);
 
   const started = certifications.filter((cert) => {
     const p = allProgress[cert.slug];

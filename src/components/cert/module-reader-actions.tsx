@@ -4,10 +4,12 @@ import Link from "next/link";
 import { Check, ChevronLeft, ChevronRight } from "lucide-react";
 import { toggleModuleRead } from "@/lib/progress";
 import { useCertProgress } from "@/lib/use-progress";
+import { useLanguage } from "@/components/site/language-provider";
 import { Button } from "@/components/ui/button";
 
 export function ModuleReadToggle({ certSlug, moduleSlug }: { certSlug: string; moduleSlug: string }) {
   const progress = useCertProgress(certSlug);
+  const { t } = useLanguage();
   const isRead = progress.modulesRead.includes(moduleSlug);
 
   return (
@@ -17,7 +19,7 @@ export function ModuleReadToggle({ certSlug, moduleSlug }: { certSlug: string; m
       className="w-full sm:w-auto"
     >
       <Check className="size-4" />
-      {isRead ? "Module lu" : "Marquer comme lu"}
+      {isRead ? t("moduleUi", "moduleRead") : t("moduleUi", "markAsRead")}
     </Button>
   );
 }
@@ -35,6 +37,8 @@ export function ModulePagination({
   nextHref?: string;
   nextLabel?: string;
 }) {
+  const { t } = useLanguage();
+
   return (
     <div className="flex items-center justify-between gap-3">
       {prevHref ? (
@@ -43,13 +47,14 @@ export function ModulePagination({
           <span className="truncate">{prevLabel}</span>
         </Button>
       ) : (
-        <Button nativeButton={false}
+        <Button
+          nativeButton={false}
           render={<Link href={`/certifications/${certSlug}/cours`} />}
           variant="outline"
           className="flex-1 justify-start sm:flex-none"
         >
           <ChevronLeft className="size-4" />
-          Tous les modules
+          {t("moduleUi", "allModules")}
         </Button>
       )}
       {nextHref && (

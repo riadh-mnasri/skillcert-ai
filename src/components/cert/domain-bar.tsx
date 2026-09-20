@@ -1,5 +1,8 @@
+"use client";
+
 import type { Domain } from "@/content/types";
 import type { DomainStat } from "@/lib/progress";
+import { useLanguage } from "@/components/site/language-provider";
 import { cn } from "@/lib/utils";
 
 export function DomainBar({
@@ -11,6 +14,7 @@ export function DomainBar({
   stat?: DomainStat;
   index: number;
 }) {
+  const { t } = useLanguage();
   const masteryPercent = stat && stat.attempts > 0 ? Math.round((stat.correct / stat.attempts) * 100) : null;
 
   return (
@@ -43,7 +47,7 @@ export function DomainBar({
               masteryPercent >= 70 ? "text-primary" : "text-muted-foreground",
             )}
           >
-            {masteryPercent}% maitrise
+            {masteryPercent}% {t("domainUi", "mastery")}
           </span>
         )}
       </div>

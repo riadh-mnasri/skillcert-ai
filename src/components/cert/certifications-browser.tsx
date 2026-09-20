@@ -1,20 +1,24 @@
 "use client";
 
 import Link from "next/link";
-import type { Certification, ProviderId } from "@/content/types";
+import type { ProviderId } from "@/content/types";
+import { getCertification } from "@/content";
 import { providerList } from "@/content/providers";
 import { CertCard } from "@/components/cert/cert-card";
 import { useLanguage } from "@/components/site/language-provider";
 import { cn } from "@/lib/utils";
 
 export function CertificationsBrowser({
-  certifications,
+  slugs,
   activeFilter,
 }: {
-  certifications: Certification[];
+  slugs: string[];
   activeFilter?: ProviderId;
 }) {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
+  const certifications = slugs
+    .map((slug) => getCertification(slug, lang))
+    .filter((cert): cert is NonNullable<typeof cert> => Boolean(cert));
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-14">

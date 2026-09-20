@@ -4,6 +4,7 @@ import * as React from "react";
 import { CheckCircle2, RotateCcw, XCircle } from "lucide-react";
 import type { Certification, QuizQuestion } from "@/content/types";
 import { recordQuizAnswer } from "@/lib/progress";
+import { useLanguage } from "@/components/site/language-provider";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
@@ -17,12 +18,6 @@ function shuffle<T>(items: T[]): T[] {
   return copy;
 }
 
-const difficultyLabel: Record<QuizQuestion["difficulty"], string> = {
-  facile: "Facile",
-  moyen: "Moyen",
-  difficile: "Difficile",
-};
-
 export function QuizRunner({
   cert,
   domainId,
@@ -32,6 +27,13 @@ export function QuizRunner({
   domainId?: string;
   domainTitle?: string;
 }) {
+  const { t } = useLanguage();
+  const difficultyLabel: Record<QuizQuestion["difficulty"], string> = {
+    facile: t("quizUi", "difficultyEasy"),
+    moyen: t("quizUi", "difficultyMedium"),
+    difficile: t("quizUi", "difficultyHard"),
+  };
+
   const pool = domainId ? cert.quizBank.filter((q) => q.domainId === domainId) : cert.quizBank;
 
   const [questions, setQuestions] = React.useState(() => shuffle(pool));
@@ -65,7 +67,7 @@ export function QuizRunner({
   if (questions.length === 0) {
     return (
       <p className="rounded-lg border border-dashed border-border p-6 text-sm text-muted-foreground">
-        Aucune question disponible pour ce domaine pour le moment.
+        {t("quizUi", "noQuestions")}
       </p>
     );
   }
@@ -76,12 +78,12 @@ export function QuizRunner({
       <div className="rounded-xl border border-border bg-card p-6 text-center sm:p-8">
         <p className="font-heading text-4xl font-semibold text-primary">{percent}%</p>
         <p className="mt-2 text-sm text-muted-foreground">
-          {score.correct} bonnes reponses sur {score.total}
-          {domainTitle ? ` — domaine "${domainTitle}"` : ""}
+          {score.correct} {t("quizUi", "correctOutOf")} {score.total}
+          {domainTitle ? ` — "${domainTitle}"` : ""}
         </p>
         <Button onClick={handleRestart} className="mt-5">
           <RotateCcw className="size-4" />
-          Recommencer cette serie
+          {t("quizUi", "restartSeries")}
         </Button>
       </div>
     );
@@ -94,7 +96,7 @@ export function QuizRunner({
           Question {index + 1} / {questions.length}
         </span>
         <span>
-          Score en cours : {score.correct}/{score.total}
+          {t("quizUi", "scoreInProgress")} : {score.correct}/{score.total}
         </span>
       </div>
       <div className="h-1.5 w-full overflow-hidden rounded-full bg-muted">
@@ -145,7 +147,7 @@ export function QuizRunner({
         {selected !== null && (
           <div className="mt-4 rounded-lg bg-secondary/60 p-4 text-sm">
             <p className="font-medium">
-              {selected === current.correctIndex ? "Bonne reponse." : "Reponse incorrecte."}
+              {selected === current.correctIndex ? t("quizUi", "goodAnswer") : t("quizUi", "wrongAnswer")}
             </p>
             <p className="mt-1 text-muted-foreground">{current.explanation}</p>
           </div>
@@ -153,7 +155,7 @@ export function QuizRunner({
 
         <div className="mt-5 flex justify-end">
           <Button onClick={handleNext} disabled={selected === null}>
-            {index + 1 === questions.length ? "Voir le score" : "Question suivante"}
+            {index + 1 === questions.length ? t("quizUi", "seeScore") : t("quizUi", "nextQuestion")}
           </Button>
         </div>
       </div>

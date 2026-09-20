@@ -1,18 +1,18 @@
 # SkillCert AI
 
-Plateforme independante de preparation aux certifications IA : cours, fiches de revision, QCM par domaine et examens blancs chronometres pour les certifications Anthropic Claude, OpenAI, AWS, Google Cloud et Microsoft Azure.
+Plateforme indépendante de préparation aux certifications IA : cours, fiches de révision, QCM par domaine et examens blancs chronométrés pour les certifications Anthropic Claude, OpenAI, AWS, Google Cloud et Microsoft Azure. Disponible en français et en anglais.
 
-> Ressource independante, non affiliee ni approuvee par Anthropic, OpenAI, Amazon Web Services, Google ou Microsoft. Les formats d'examen (nombre de questions, duree, prix, seuil de reussite) sont indiques a titre indicatif : verifiez toujours les informations a jour sur le site officiel du fournisseur avant de vous inscrire.
+> Ressource indépendante, non affiliée ni approuvée par Anthropic, OpenAI, Amazon Web Services, Google ou Microsoft. Les formats d'examen (nombre de questions, durée, prix, seuil de réussite) sont indiqués à titre indicatif : vérifiez toujours les informations à jour sur le site officiel du fournisseur avant de vous inscrire.
 
 ## Certifications couvertes (v1)
 
 - **Anthropic** — Claude Certified Associate
-- **OpenAI** — AI Foundations (OpenAI Academy, badge de completion)
+- **OpenAI** — AI Foundations (OpenAI Academy, badge de complétion)
 - **AWS** — AWS Certified AI Practitioner (AIF-C01)
 - **Google Cloud** — Generative AI Leader
 - **Microsoft Azure** — Azure AI Fundamentals (AI-900)
 
-Chaque certification suit la meme structure : domaines d'examen ponderes, modules de cours, glossaire en fiches a retourner, banque de QCM avec correction immediate, et un examen blanc qui recompose une simulation chronometree respectant la ponderation officielle.
+Chaque certification suit la même structure : domaines d'examen pondérés, modules de cours, glossaire en fiches à retourner, banque de QCM avec correction immédiate, et un examen blanc qui recompose une simulation chronométrée respectant la pondération officielle.
 
 ## Stack technique
 
@@ -20,9 +20,10 @@ Chaque certification suit la meme structure : domaines d'examen ponderes, module
 - TypeScript
 - Tailwind CSS v4
 - [shadcn/ui](https://ui.shadcn.com/) sur base [Base UI](https://base-ui.com/)
-- Contenu et progression : fichiers TypeScript statiques + `localStorage` (aucune base de donnees, aucun compte requis)
+- Contenu et progression : fichiers TypeScript statiques + `localStorage` (aucune base de données, aucun compte requis)
+- Interface bilingue (français/anglais) via un contexte de langue côté client, sans routage par locale
 
-## Demarrage local
+## Démarrage local
 
 ```bash
 npm install
@@ -33,21 +34,23 @@ L'application est servie sur [http://localhost:3520](http://localhost:3520).
 
 ## Scripts disponibles
 
-- `npm run dev` — serveur de developpement (port 3520)
+- `npm run dev` — serveur de développement (port 3520)
 - `npm run build` — build de production
 - `npm run start` — sert le build de production
-- `npm run lint` — verifie le code avec ESLint
+- `npm run lint` — vérifie le code avec ESLint
 
 ## Structure du contenu
 
-Le contenu pedagogique vit dans `src/content/certifications/*.ts`, un fichier par certification, conforme a l'interface `Certification` definie dans `src/content/types.ts` (domaines, modules de cours, glossaire, banque de QCM, plan de revision). Ajouter une certification consiste a creer un nouveau fichier suivant ce modele et a l'enregistrer dans `src/content/index.ts`.
+Le contenu pédagogique vit dans `src/content/certifications/*.ts` (français) et `*.en.ts` (anglais), un fichier par certification et par langue, conforme à l'interface `Certification` définie dans `src/content/types.ts` (domaines, modules de cours, glossaire, banque de QCM, plan de révision). Les deux versions d'une même certification partagent exactement les mêmes identifiants (slugs de domaine, de module, de question) afin que la progression de l'utilisateur reste cohérente quelle que soit la langue choisie. Ajouter une certification consiste à créer les deux fichiers suivant ce modèle et à les enregistrer dans `src/content/index.ts`.
 
-La progression de l'utilisateur (modules lus, scores de QCM, tentatives d'examen blanc) est stockee uniquement dans le `localStorage` du navigateur : aucune donnee n'est envoyee a un serveur.
+Les textes de l'interface (navigation, boutons, libellés) vivent dans `src/lib/i18n.ts`.
 
-## Deploiement
+La progression de l'utilisateur (modules lus, scores de QCM, tentatives d'examen blanc) est stockée uniquement dans le `localStorage` du navigateur : aucune donnée n'est envoyée à un serveur.
 
-Projet concu pour un deploiement sur [Vercel](https://vercel.com/).
+## Déploiement
+
+Projet conçu pour un déploiement sur [Vercel](https://vercel.com/).
 
 ## Licence
 
-© 2026 Riadh MNASRI. Tous droits reserves.
+© 2026 Riadh MNASRI. Tous droits réservés.

@@ -19,8 +19,6 @@ export async function generateMetadata(props: PageProps<"/certifications/[slug]"
 
 export default async function CertificationDetailPage(props: PageProps<"/certifications/[slug]">) {
   const { slug } = await props.params;
-  const cert = getCertification(slug);
-  if (!cert) notFound();
-
-  return <CertDetailContent cert={cert} />;
+  if (!getCertification(slug)) notFound();
+  return <CertDetailContent slug={slug} />;
 }

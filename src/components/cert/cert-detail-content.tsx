@@ -6,11 +6,11 @@ import type { Certification } from "@/content/types";
 import { ProviderBadge } from "@/components/cert/provider-badge";
 import { DomainOverview } from "@/components/cert/domain-overview";
 import { SectionNavCards } from "@/components/cert/section-nav-cards";
-import { ContentLanguageNotice } from "@/components/cert/content-language-notice";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/components/site/language-provider";
 import { translateLevel } from "@/lib/i18n";
+import { getCertification } from "@/content";
 
 const chipConfig = (cert: Certification) => [
   { icon: ListChecks, label: `${cert.format.questionCount}`, unitKey: "questions" as const },
@@ -20,8 +20,10 @@ const chipConfig = (cert: Certification) => [
   { icon: Monitor, label: cert.format.deliveryMode, unitKey: null },
 ];
 
-export function CertDetailContent({ cert }: { cert: Certification }) {
+export function CertDetailContent({ slug }: { slug: string }) {
   const { t, lang } = useLanguage();
+  const cert = getCertification(slug, lang);
+  if (!cert) return null;
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6 sm:py-14">
@@ -38,7 +40,6 @@ export function CertDetailContent({ cert }: { cert: Certification }) {
       <h1 className="mt-4 font-heading text-3xl font-semibold sm:text-4xl">{cert.name}</h1>
       <p className="mt-1 font-mono text-sm text-muted-foreground">{cert.code}</p>
       <p className="mt-4 max-w-3xl text-pretty text-muted-foreground">{cert.description}</p>
-      <ContentLanguageNotice />
 
       <div className="mt-6 flex flex-wrap gap-2">
         {chipConfig(cert).map((chip) => (
@@ -75,7 +76,7 @@ export function CertDetailContent({ cert }: { cert: Certification }) {
           </h2>
           <p className="mt-1 text-sm text-muted-foreground">
             {lang === "fr"
-              ? "Ponderation officielle indicative et votre maitrise mesuree via le QCM."
+              ? "Pondération officielle indicative et votre maîtrise mesurée via le QCM."
               : "Indicative official weighting and your mastery as measured by the quiz."}
           </p>
           <div className="mt-5">
@@ -85,7 +86,7 @@ export function CertDetailContent({ cert }: { cert: Certification }) {
 
         <div>
           <h2 className="font-heading text-xl font-semibold">
-            {lang === "fr" ? "Plan de revision suggere" : "Suggested study plan"}
+            {lang === "fr" ? "Plan de révision suggéré" : "Suggested study plan"}
           </h2>
           <ol className="mt-5 space-y-4">
             {cert.studyPlan.map((step, i) => (
